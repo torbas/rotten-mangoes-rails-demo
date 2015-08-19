@@ -66,7 +66,7 @@ class MoviesController < ApplicationController
   def destroy
     @movie = Movie.find(params[:id])
     @movie.destroy
-    render :index
+    redirect_to movies_path
   end
 
   protected
