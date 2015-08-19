@@ -2,7 +2,11 @@
 
 <table>
 <% @users.each do |user| %>
-  <tr><td><%=user.full_name%></td> <td><%=user.email%></td></tr>
+  <tr>
+    <td><%=user.full_name%></td> 
+    <td><%=user.email%></td>
+    <td><%= link_to "delete", admin_user_path(user), method: :delete, confirm: "You sure?" %></td>
+  </tr>
 
 <% end %>
 </table>
