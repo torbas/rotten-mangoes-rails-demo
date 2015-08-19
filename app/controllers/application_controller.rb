@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
   protected
 
   def restrict_access
-    if !current_user
-      flash[:alert] = "You must log in."
+    if !current_user || !current_user.admin
+      flash[:alert] = "You do not have permission to access this page."
       redirect_to new_session_path
     end
   end
