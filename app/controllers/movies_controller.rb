@@ -31,22 +31,22 @@ class MoviesController < ApplicationController
     @movies = Movie.all
 
     unless params[:title].empty?
-     @movies =  @movies.where('lower(title) like ?', "%#{params[:title].downcase}%") 
+     @movies =  @movies.with_title(params[:title])
     end
 
     unless params[:director].empty?
-      @movies = @movies.where('lower(director) like ?', "%#{params[:director].downcase}%")  
+      @movies = @movies.with_director(params[:director].downcase) 
     end
 
     unless params[:runtime_in_minutes].empty?
 
       case params[:runtime_in_minutes]
       when "short"
-        @movies = @movies.where('runtime_in_minutes < 90')  
+        @movies = @movies.short_running_time 
       when "medium"
-        @movies = @movies.where('runtime_in_minutes >= 90 AND runtime_in_minutes <= 120')  
+        @movies = @movies.medium_running_time
       when "long"
-        @movies = @movies.where('runtime_in_minutes > 120')  
+        @movies = @movies.long_running_time 
       end
     
     end
