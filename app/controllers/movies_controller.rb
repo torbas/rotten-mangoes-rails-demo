@@ -30,12 +30,8 @@ class MoviesController < ApplicationController
   def search
     @movies = Movie.all
 
-    unless params[:title].empty?
-     @movies =  @movies.with_title(params[:title])
-    end
-
-    unless params[:director].empty?
-      @movies = @movies.with_director(params[:director].downcase) 
+    unless params[:title_or_director].empty?
+     @movies =  @movies.with_title_or_director(params[:title_or_director])
     end
 
     unless params[:runtime_in_minutes].empty?
