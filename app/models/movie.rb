@@ -18,6 +18,12 @@ class Movie < ActiveRecord::Base
 
   validate :release_date_is_in_the_future
 
+  scope :with_title, ->(query_title) { where('lower(title) like ?', "%#{query_title.downcase}%") }
+  scope :with_director, ->(query_director) { where('lower(director) like ?', "%#{query_director.downcase}%") }
+  scope :short_running_time, -> { where('runtime_in_minutes < 90') }
+  scope :medium_running_time, -> { where('runtime_in_minutes >= 90 AND runtime_in_minutes <= 120') }
+  scope :long_running_time, -> { where('runtime_in_minutes > 120') }
+
   def review_average
     reviews.sum(:rating_out_of_ten)/reviews.size if reviews.size > 0
   end
