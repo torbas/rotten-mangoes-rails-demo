@@ -18,8 +18,7 @@ class Movie < ActiveRecord::Base
 
   validate :release_date_is_in_the_future
 
-  scope :with_title, ->(query_title) { where('lower(title) like ?', "%#{query_title.downcase}%") }
-  scope :with_director, ->(query_director) { where('lower(director) like ?', "%#{query_director.downcase}%") }
+  scope :with_title_or_director, ->(query_title) { where('lower(title) like ? or lower(director) like ?' , "%#{query_title.downcase}%", "%#{query_title.downcase}%") }
   scope :short_running_time, -> { where('runtime_in_minutes < 90') }
   scope :medium_running_time, -> { where('runtime_in_minutes >= 90 AND runtime_in_minutes <= 120') }
   scope :long_running_time, -> { where('runtime_in_minutes > 120') }
